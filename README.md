@@ -2,3 +2,4 @@
 
 Simple wrapper around the D3 force layout network visualization.
 
+<img src="screenshot.png">
