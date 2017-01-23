@@ -52,28 +52,16 @@ class ForceChart(object):
                       charge,
                       node_radius,
                       stroke_width)
-        # <script>{d3_raw}</script>
-        # <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.8/d3.min.js"></script>
-       # <script>
 
-    # require.config({{
-       #  paths: {{
-       #      d3: 'https://cdnjs.cloudflare.com/ajax/libs/d3/3.4.8/d3.min.js'
-       #  }}
-    # }});
-       #         require(['d3'], function(d3){{
-# {fl_raw}
-# }});</script>
 
         self.template = '''<!DOCTYPE html><html><head>
         </head><body>
         <div id="chart1"></div>
         <script>
-{d3_raw}
+        {d3_raw}
         {variables}
-{fl_raw}
+        {fl_raw}
         </script>
- 
         <script>
         draw_graph(graph,link_distance,charge,node_radius,stroke_width);
         </script></body></html>
