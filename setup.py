@@ -1,6 +1,9 @@
 """pyd3netviz"""
 
 from distutils.core import setup
+
+with open('requirements.txt') as f:
+    required = f.read().splitlines()
 setup(
     name='pyd3netviz',
     packages=['pyd3netviz'],
@@ -12,5 +15,6 @@ setup(
     download_url='https://github.com/gte620v/pyd3netviz/tarball/0.1',
     keywords=['network graph', 'd3js', 'visualization',
               'force layout', 'Jupyter Notebook'],
-    classifiers=[]
+    classifiers=[],
+    install_requires=required,
 )
