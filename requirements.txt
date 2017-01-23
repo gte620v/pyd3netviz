@@ -1,0 +1,2 @@
+pyperclip==1.5.27
+networkx==1.11
