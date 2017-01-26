@@ -2,25 +2,31 @@
 // Copyright Mike Bostock
 // Released under the GNU General Public License, version 3.
 
-function draw_graph(graph, link_distance, charge, node_radius, stroke_width) {
 
-    var margin = {
-        top: 20,
-        right: 20,
-        bottom: 30,
-        left: 40
-    };
-    var width = 960 - margin.left - margin.right;
-    var height = 600 - margin.top - margin.bottom;
+function get_val(d, field, default_val) {
+    if (field in d) {
+        return d[field];
+    } else {
+        return default_val;
+    }
+}
+
+function draw_graph(graph,
+    link_distance, charge,
+    width, height,
+    default_link_color, default_link_opacity, default_link_width,
+    default_node_radius, default_node_color, default_node_opacity,
+    link_color_field, link_opacity_field, link_width_field,
+    node_radius_field, node_color_field, node_opacity_field) {
+
     var svg = d3.select("#chart1").append("svg")
         .style("position", "relative")
-        .style("max-width", "960px")
+        .style("max-width", width + "px")
         .attr("width", width + "px")
-        .attr("height", (height + 50) + "px")
-        .append("g")
-        .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+        .attr("height", height + "px")
+        .append("g");
 
-    var color = d3.scale.category10();
+
     var force = d3.layout.force()
         .charge(charge)
         .linkDistance(link_distance)
@@ -36,19 +42,29 @@ function draw_graph(graph, link_distance, charge, node_radius, stroke_width) {
         .enter().append("line")
         .attr("class", "link")
         .style("stroke", function(d) {
-            return d.d3color;
+            return get_val(d, link_color_field, default_link_color);
         })
-        .style("stroke-opacity", .5)
-        .style("stroke-width", stroke_width);
+        .style("stroke-opacity", function(d) {
+            return get_val(d, link_opacity_field, default_link_opacity);
+        })
+        .style("stroke-width", function(d) {
+            return get_val(d, link_width_field, default_link_width);
+        });
 
 
     var node = svg.selectAll("circle.node")
         .data(graph.nodes)
         .enter().append("circle")
         .attr("class", "node")
-        .attr("r", node_radius)
-        .style("fill", "#999")
-        .style("opacity", .4)
+        .attr("r", function(d) {
+            return get_val(d, node_radius_field, default_node_radius);
+        })
+        .style("fill", function(d) {
+            return get_val(d, node_color_field, default_node_color);
+        })
+        .style("opacity", function(d) {
+            return get_val(d, node_opacity_field, default_node_opacity);
+        })
         .call(force.drag);
 
     force.on("tick", function() {
