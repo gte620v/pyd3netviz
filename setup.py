@@ -12,7 +12,7 @@ setup(
     author='Bob Baxley',
     author_email='bob.baxley@gmail.com',
     url='https://github.com/gte620v/pyd3netviz',
-    download_url='https://github.com/gte620v/pyd3netviz/tarball/0.1',
+    download_url='https://github.com/gte620v/pyd3netviz/archive/0.1.tar.gz',
     keywords=['network graph', 'd3js', 'visualization',
               'force layout', 'Jupyter Notebook'],
     classifiers=[],
