@@ -14,7 +14,7 @@ import webbrowser
 import json
 import pyperclip
 from networkx.readwrite import json_graph
-from IPython.display import IFrame, display
+from IPython.display import display_html, display, IFrame
 
 
 def _add_file_to_path(path):
@@ -54,7 +54,7 @@ class ForceChart(object):
            """
 
     html_template = """
-        <!DOCTYPE html><html><head>
+        <html><head>
         </head><body>
         <div id="chart1"></div>
         <script>
@@ -125,12 +125,24 @@ class ForceChart(object):
         """return the embed iframe"""
         return self.html
 
-    def to_notebook(self, path_and_name='temp.html', width=900, height=700):
-        """open viz in notebook cell"""
+    def to_notebook(self, path_and_name=None, width=900, height=700):
+        """open viz in notebook cell
 
-        self.to_file(path_and_name)
+        If path_and_name is None, then we write straight to notebook.
+        Otherwise, we write html to a file and show that file in an iframe.
+        """
+        if path_and_name is not None:
+            self.to_file(path_and_name)
 
-        display(IFrame(src=path_and_name, width=width, height=height))
+            display(IFrame(src=path_and_name, width=width, height=height))
+        else:
+            escaped_html = self.html.replace('"', '&quot;')
+            iframe = '''
+            <iframe srcdoc="
+            {html}
+            " width={width} height={height}></iframe>
+            '''.format(html=escaped_html, width=width, height=height)
+            display_html(iframe, raw=True)
 
     def to_clipboard(self):
         """ send viz to clipboard """
