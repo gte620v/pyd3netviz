@@ -3,6 +3,7 @@
 Simple Python wrapper around the D3 force layout network visualization.
 
 <img src="screenshot.png">
+<img src="screenshot2.png">
 
 # Install
 
