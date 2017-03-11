@@ -3,3 +3,9 @@
 Simple Python wrapper around the D3 force layout network visualization.
 
 <img src="screenshot.png">
+
+# Install
+
+```
+pip install pyd3netviz
+```
