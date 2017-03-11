@@ -126,13 +126,14 @@ class ForceChart(object):
         url = _add_file_to_path(path)
         webbrowser.open(url)
 
-    def to_notebook(self, path_and_name='temp.html'):
+    def to_notebook(self, path_and_name='temp.html', width=None, height=None):
         """open viz in notebook cell"""
 
         self.to_file(path_and_name)
 
-        display(IFrame(src=path_and_name, width=self.width,
-                       height=self.height))
+        display(IFrame(src=path_and_name,
+                       width=self.width if width is None else width,
+                       height=self.height if height is None else height))
 
     def to_clipboard(self):
         """ send viz to clipboard """
