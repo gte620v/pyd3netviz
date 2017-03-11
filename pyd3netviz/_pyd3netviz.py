@@ -55,7 +55,10 @@ class ForceChart(object):
 
     html_template = """
         <!DOCTYPE html><html><head>
-        </head><body>
+        </head><body style="
+                    margin: 0px;
+                    overflow: hidden;
+                ">
         <div id="chart1"></div>
         <script>
         {d3_raw}
@@ -70,7 +73,7 @@ class ForceChart(object):
             default_node_radius, default_node_color, default_node_opacity,
             link_color_field, link_opacity_field, link_width_field,
             node_radius_field, node_color_field, node_opacity_field);
-        </script></body></html> 
+        </script></body></html>
        """
 
     def __init__(self,
@@ -91,6 +94,8 @@ class ForceChart(object):
                  node_opacity_field=None):
         d3_raw = _get_js('d3.min.js')
         fl_raw = _get_js('force_layout.js')
+        self.width = width
+        self.height = height
 
         # assumes `None` is not a field.
         # todo: more elegant way to handle this
@@ -121,16 +126,13 @@ class ForceChart(object):
         url = _add_file_to_path(path)
         webbrowser.open(url)
 
-    def _repr_html_(self):
-        """return the embed iframe"""
-        return self.html
-
-    def to_notebook(self, path_and_name='temp.html', width=900, height=700):
+    def to_notebook(self, path_and_name='temp.html'):
         """open viz in notebook cell"""
 
         self.to_file(path_and_name)
 
-        display(IFrame(src=path_and_name, width=width, height=height))
+        display(IFrame(src=path_and_name, width=self.width,
+                       height=self.height))
 
     def to_clipboard(self):
         """ send viz to clipboard """
