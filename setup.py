@@ -17,5 +17,5 @@ setup(
     keywords=['network graph', 'd3js', 'visualization',
               'force layout', 'Jupyter Notebook'],
     classifiers=[],
-    install_requires=['pyperclip==1.5.27', 'networkx==1.11', ],
+    install_requires=['pyperclip==1.5.27', 'networkx==2.1', ],
 )
